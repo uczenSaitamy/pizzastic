@@ -2,17 +2,17 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeController extends AbstractController
+class HomeController extends BaseController
 {
+    protected $prefix = 'home';
     /**
      * @Route("/home", name="home")
      */
     public function index()
     {
-        return $this->render('home/index.html.twig', [
+        return $this->view('index', [
             'controller_name' => 'HomeController',
         ]);
     }

@@ -3,19 +3,27 @@
     <head>
         <meta charset="UTF-8">
         <title>
-            {% block title %}Welcome!
+            {% block title %}
+                {{ app_name|title }}
+                -
+                {% block subtitle %}{% endblock %}
             {% endblock %}
         </title>
         {% block stylesheets %}
             {{ encore_entry_link_tags('css/app') }}
+            {% block sub_css %}{% endblock %}
         {% endblock %}
     </head>
-    <body>
+    <body class="font-mono text-base">
         <div class="container mx-auto">
-            {% block body %}{% endblock %}
+            {{ include('templates/auth.html.twig') }}
+            <div class="mt-4">
+                {% block body %}{% endblock %}
+            </div>
         </div>
         {% block javascripts %}
             {{ encore_entry_script_tags('js/app') }}
+            {% block sub_js %}{% endblock %}
         {% endblock %}
     </body>
 </html>
