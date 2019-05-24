@@ -1,0 +1,15 @@
+{% if error is defined and error is not null %}
+    <div class="flex justify-center">
+        <div class="w-2/3 bg-red-lightest border-l-4 border-red-dark text-red-dark px-2 py-1 my-2" role="alert">
+            <p class="font-bold text-center">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+        </div>
+    </div>
+{% endif %}
+
+{% for message in app.flashes('success') %}
+    <div class="flex justify-center">
+        <div class="w-2/3 bg-teal-lightest border-l-4 border-teal-dark text-teal-dark px-2 py-1 my-2" role="alert">
+            <p class="font-bold text-center">{{ message }}</p>
+        </div>
+    </div>
+{% endfor %}

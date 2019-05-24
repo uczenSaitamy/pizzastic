@@ -3,28 +3,29 @@
 {% block subtitle %}Login
 {% endblock %}
 {% block body %}
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+    <div class="flex justify-center text-center">
+        <form method="post">
+            <h3 class="mb-3">Please sign in</h3>
 
-        <h3 class="">Please sign in</h3>
-        <label class="sr-only" for="inputEmail">Email</label>
-        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
-        <label class="sr-only" for="inputPassword">Password</label>
-        <input class="form-control" id="inputPassword" name="password" placeholder="Password" required type="password">
+            <div class="row">
+                <label class="" for="inputEmail">Email</label>
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="my-1 bg-grey-lighter px-3 py-1 rounded" placeholder="Email" required autofocus>
+            </div>
+            <label class="" for="inputPassword">Password</label>
+            <input class="my-1 bg-grey-lighter px-3 py-1 rounded" id="inputPassword" name="password" placeholder="Password" required type="password">
 
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-        <div class="checkbox mb-3">
-            <label>
-                <input name="_remember_me" type="checkbox">
-                Remember me
-            </label>
-        </div>
+            <div class="checkbox my-1">
+                <label>
+                    <input name="_remember_me" type="checkbox">
+                    Remember me
+                </label>
+            </div>
 
-        <button class="btn btn-lg btn-primary" type="submit">
-            Sign in
-        </button>
-    </form>
+            <button class="bg-blue hover:bg-blue-dark rounded text-teal-lightest font-bold px-3 py-1" type="submit">
+                Sign in
+            </button>
+        </form>
+    </div>
 {% endblock %}
