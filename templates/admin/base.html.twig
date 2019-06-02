@@ -1,0 +1,19 @@
+{% extends 'templates/index.html.twig' %}
+{% block index %}
+    <body class="bg-grey-lightest font-sans leading-normal tracking-normal">
+        {% include "admin/templates/header.html.twig" %}
+        {# {% include "admin/templates/container.html.twig" %} #}
+        <div class="container w-full mx-auto pt-20">
+            <div class="w-full px-4 md:px-0 md:mt-8 mb-16 text-grey-darkest leading-normal">
+                {% block body %}{% endblock %}
+            </div>
+        </div>
+
+        {% include "admin/templates/footer.html.twig" %}
+        {% include "admin/templates/scripts.html.twig" %}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('js/app') }}
+            {% block sub_js %}{% endblock %}
+        {% endblock %}
+    </body>
+{% endblock %}

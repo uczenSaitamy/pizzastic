@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>
-            {% block title %}
-                {{ app_name|title }}
-                -
-                {% block subtitle %}{% endblock %}
-            {% endblock %}
-        </title>
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('css/app') }}
-            {% block sub_css %}{% endblock %}
-        {% endblock %}
-    </head>
+{% extends 'templates/index.html.twig' %}
+{% block index %}
     <body class="font-mono text-base">
         <div class="container mx-auto">
             {{ include('templates/nav.html.twig') }}
@@ -27,4 +13,4 @@
             {% block sub_js %}{% endblock %}
         {% endblock %}
     </body>
-</html>
+{% endblock %}

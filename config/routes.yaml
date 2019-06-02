@@ -23,3 +23,7 @@ register.store:
 account:
     path: /account
     controller: App\Controller\HomeController::account
+
+dashboard:
+    path: /admin
+    controller: App\Controller\Admin\AdminController::index
