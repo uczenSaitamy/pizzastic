@@ -24,6 +24,7 @@ class User implements UserInterface
     /**
      * @Assert\Email
      * @Assert\NotBlank
+     * @Assert\Length(min = 6)
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -34,8 +35,6 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @Assert\NotBlank
-     * @Assert\Length(min=6)
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
@@ -149,9 +148,9 @@ class User implements UserInterface
         return $this->confirm_token;
     }
 
-    public function setConfirmToken(?string $confirm_token): self
+    public function setConfirmToken(): self
     {
-        $this->confirm_token = $confirm_token;
+        $this->confirm_token = md5(uniqid($this->email, true));
 
         return $this;
     }
