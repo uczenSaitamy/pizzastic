@@ -24,6 +24,10 @@ account:
     path: /account
     controller: App\Controller\HomeController::account
 
-dashboard:
+admin:
     path: /admin
     controller: App\Controller\Admin\AdminController::index
+
+admin.users:
+    path: /admin/users
+    controller: App\Controller\Admin\UsersController::index

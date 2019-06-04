@@ -1,0 +1,52 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block subtitle %}Admin - Users
+{% endblock %}
+
+{% block body %}
+    <div class="w-full p-3">
+        <div class="bg-white border rounded shadow">
+            <div class="border-b p-3 flex flex-wrap uppercase text-gray-600">
+                <h5 class="">Users:</h5>
+                <a class="px-3 {{ app.request.get('_route') == 'admin.users' ? 'text-orange-600 border-orange-600' : 'text-gray-500' }}" href="#">all</a>
+                <a class="px-3 {{ app.request.get('_route') == 'admin.users.normal' ? 'text-orange-600' : 'text-gray-500' }}" href="#">normal</a>
+                <a class="px-3 {{ app.request.get('_route') == 'admin.users.admin' ? 'text-orange-600' : 'text-gray-500' }}" href="#">admin</a>
+            </div>
+            <div class="p-5">
+                <table class="w-full text-gray-800">
+                    <thead>
+                        <tr>
+                            <th class="text-left text-blue-900">E-mail</th>
+                            <th class="text-left text-blue-900">Created At</th>
+                            <th class="text-left text-blue-900">Updated At</th>
+                            <th class="text-left text-blue-900">Last Login</th>
+                            <th class="text-left text-blue-900">Confirmed</th>
+                            <th class="text-left text-blue-900">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.createdAt|date("m-d-Y") }}</td>
+                                <td>{{ user.updatedAt|date("m-d-Y") }}</td>
+                                <td>{{ user.lastLogin|date("m-d-Y") }}</td>
+                                <td>
+                                    {% if user.confirmToken %}
+                                        NO
+                                    {% endif %}
+                                </td>
+                                <td class="py-1">
+                                    <a class="btn-g" href="#">EDIT</a>
+                                    <a class="btn-o" href="#">VIEW</a>
+                                    <a class="btn-r" href="#">DELETE</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>{% endblock %}
