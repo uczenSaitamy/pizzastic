@@ -11,7 +11,7 @@
         <div class="row">
             {{ form_label(form.email) }}
             {{ form_widget(form.email, {'attr': {
-                'class': 'my-1 bg-gray-400 px-3 py-1 rounded',
+                'class': 'my-1 bg-gray-200 px-3 py-1 rounded',
                 'placeholder': 'Email'}}) }}
             <small class="text-red">
                 {{ form_errors(form.email)}}
@@ -20,7 +20,7 @@
         <div class="row">
             {{ form_label(form.plainPassword.first) }}
             {{ form_widget(form.plainPassword.first, {'attr': {
-                'class': 'my-1 bg-gray-400 px-3 py-1 rounded',
+                'class': 'my-1 bg-gray-200 px-3 py-1 rounded',
                 'placeholder': 'Password'}}) }}
             <small class="text-red">
                 {{ form_errors(form.plainPassword.first)}}
@@ -29,7 +29,7 @@
         <div class="row">
             {{ form_label(form.plainPassword.second) }}
             {{ form_widget(form.plainPassword.second, {'attr': {
-                'class': 'my-1 bg-gray-400 px-3 py-1 rounded',
+                'class': 'my-1 bg-gray-200 px-3 py-1 rounded',
                 'placeholder': 'Repeat Password'}}) }}
             <small class="text-red">
                 {{ form_errors(form.plainPassword.second)}}
@@ -46,7 +46,7 @@
         </div>
 
         <div class="row">
-            <button class="bg-blue-500hover:bg-blue-600 rounded text-teal-400est font-bold px-3 py-1" type="submit">
+            <button class="btn-b" type="submit">
                 Sign up
             </button>
         </div>

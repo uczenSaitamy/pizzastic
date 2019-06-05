@@ -1,21 +1,21 @@
 <h3>Auth:</h3>
-<ul class="list-disc">
+<ul class="list-none">
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <li>
             Email:
             {{ app.user.email }}</li>
         <li>
-            <a href="{{ path('account') }}">Account</a>
+            <a href="{{ path('account') }}" class="underline">Account</a>
         </li>
         <li>
-            <a href="{{ path('logout') }}">Logout</a>
+            <a href="{{ path('logout') }}" class="underline">Logout</a>
         </li>
     {% else %}
         <li>
-            <a href="{{ path('login') }}">Login</a>
+            <a href="{{ path('login') }}" class="underline">Login</a>
         </li>
         <li>
-            <a href="{{ path('register') }}">Register</a>
+            <a href="{{ path('register') }}" class="underline">Register</a>
         </li>
     {% endif %}
 </ul>
