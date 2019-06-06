@@ -33,11 +33,11 @@ class UserRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findRoleUser()
+    public function findExceptRole($role)
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.roles NOT LIKE :role')
-            ->setParameter('role', '%ROLE_ADMIN%')
+            ->setParameter('role', '%' . $role . '%')
             ->orderBy('u.created_at', 'DESC')
             ->getQuery()
             ->getResult();

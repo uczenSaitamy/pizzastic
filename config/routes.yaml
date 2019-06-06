@@ -31,3 +31,11 @@ admin:
 admin.users:
     path: /admin/users
     controller: App\Controller\Admin\UsersController::index
+
+admin.users.normal:
+    path: /admin/users/normal
+    controller: App\Controller\Admin\UsersController::normal
+
+admin.users.admin:
+    path: /admin/users/admin
+    controller: App\Controller\Admin\UsersController::admin

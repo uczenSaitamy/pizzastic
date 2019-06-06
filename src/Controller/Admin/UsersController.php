@@ -13,7 +13,25 @@ class UsersController extends BaseController
     {
         $users = $this->getDoctrine()
             ->getRepository(User::class)
-            ->findRoleUser();
+            ->findAll();
+
+        return $this->view('index', ['users' => $users]);
+    }
+
+    public function normal()
+    {
+        $users = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findExceptRole('ROLE_ADMIN');
+
+        return $this->view('index', ['users' => $users]);
+    }
+
+    public function admin()
+    {
+        $users = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findByRole('ROLE_ADMIN');
 
         return $this->view('index', ['users' => $users]);
     }

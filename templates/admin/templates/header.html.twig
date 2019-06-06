@@ -25,7 +25,7 @@
                         <ul class="list-reset">
                             <li>
                                 <a class="px-4 py-2 block text-black hover:bg-gray-400 no-underline hover:no-underline" href="#">My
-                                                                                                                                                    account</a>
+                                                                                                                                                                                                                                                                                                                                        account</a>
                             </li>
                             <li>
                                 <a class="px-4 py-2 block text-black hover:bg-gray-400 no-underline hover:no-underline" href="#">Notifications</a>
@@ -56,19 +56,16 @@
         <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-white z-20" id="nav-content">
             <ul class="lg:flex flex-1 items-center px-4 md:px-0">
                 <li class="mr-6 my-2 md:my-0">
-                    <a class="{{ app.request.get('_route') == 'admin' ? 'text-orange-600 border-orange-600 hover:border-orange-600' : 'text-gray-500border-white hover:border-pink' }} block py-1 md:py-3 pl-1 align-middle no-underline hover:text-black border-b-2" href="{{ path('admin')}}">
+                    <a class="{{ app.request.get('_route') == 'admin' ? 'link-o' : 'link-inactive' }} block py-1 md:py-3 pl-1 align-middle" href="{{ path('admin')}}">
                         <i class="fas fa-home fa-fw mr-3 text-orange-600"></i>
                         <span class="pb-1 md:pb-0 text-sm">Home</span>
                     </a>
                 </li>
                 <li class="mr-6 my-2 md:my-0">
-                    <a class="{{ app.request.get('_route') == 'admin.users' ? 'text-orange-600 border-orange-600 hover:border-orange-600' : 'text-gray-500border-white hover:border-pink' }} block py-1 md:py-3 pl-1 align-middle no-underline hover:text-black border-b-2 " href="{{ path('admin.users') }}">
+                    <a class="{{ app.request.get('_route') starts with 'admin.users' ? 'link-o' : 'link-inactive' }} block py-1 md:py-3 pl-1 align-middle" href="{{ path('admin.users') }}">
                         <i class="fas fa-users fa-fw mr-3"></i>
                         <span class="pb-1 md:pb-0 text-sm">Users</span>
                     </a>
-                </li>
-                <li>
-                
                 </li>
             </ul>
         </div>

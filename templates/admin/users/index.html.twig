@@ -8,15 +8,16 @@
         <div class="bg-white border rounded shadow">
             <div class="border-b p-3 flex flex-wrap uppercase text-gray-600">
                 <h5 class="">Users:</h5>
-                <a class="px-3 {{ app.request.get('_route') == 'admin.users' ? 'text-orange-600 border-orange-600' : 'text-gray-500' }}" href="#">all</a>
-                <a class="px-3 {{ app.request.get('_route') == 'admin.users.normal' ? 'text-orange-600' : 'text-gray-500' }}" href="#">normal</a>
-                <a class="px-3 {{ app.request.get('_route') == 'admin.users.admin' ? 'text-orange-600' : 'text-gray-500' }}" href="#">admin</a>
+                <a class="px-3 {{ app.request.get('_route') == 'admin.users' ? 'link-o' : 'link-inactive' }} ml-2" href="{{ path('admin.users') }}">all</a>
+                <a class="px-3 {{ app.request.get('_route') == 'admin.users.normal' ? 'link-o' : 'link-inactive' }} ml-2" href="{{ path('admin.users.normal') }}">normal</a>
+                <a class="px-3 {{ app.request.get('_route') == 'admin.users.admin' ? 'link-o' : 'link-inactive' }} ml-2" href="{{ path('admin.users.admin') }}">admin</a>
             </div>
             <div class="p-5">
                 <table class="w-full text-gray-800">
                     <thead>
                         <tr>
                             <th class="text-left text-blue-900">E-mail</th>
+                            <th class="text-left text-blue-900">Role</th>
                             <th class="text-left text-blue-900">Created At</th>
                             <th class="text-left text-blue-900">Updated At</th>
                             <th class="text-left text-blue-900">Last Login</th>
@@ -29,6 +30,7 @@
                         {% for user in users %}
                             <tr>
                                 <td>{{ user.email }}</td>
+                                <td>{% for role in user.roles %}{{ role|trans({}, 'roles') }}<br>{% endfor %}</td>
                                 <td>{{ user.createdAt|date("m-d-Y") }}</td>
                                 <td>{{ user.updatedAt|date("m-d-Y") }}</td>
                                 <td>{{ user.lastLogin|date("m-d-Y") }}</td>
