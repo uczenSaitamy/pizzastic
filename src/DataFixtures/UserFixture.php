@@ -26,6 +26,7 @@ class UserFixture extends Fixture
 
         $roles = $user->getRoles();
         $roles[] = 'ROLE_ADMIN';
+        $roles[] = 'ROLE_SUPER_ADMIN';
         
         $user->setEmail('a@a.pl');
         $user->setRoles($roles);

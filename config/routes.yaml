@@ -21,8 +21,14 @@ register.store:
     controller: App\Controller\SecurityController::store
 
 account:
+    methods: GET
     path: /account
-    controller: App\Controller\HomeController::account
+    controller: App\Controller\User\AccountController::index
+
+account.store:
+    methods: POST
+    path: /account
+    controller: App\Controller\User\AccountController::store
 
 admin:
     path: /admin
