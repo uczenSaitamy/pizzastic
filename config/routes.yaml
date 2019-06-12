@@ -21,8 +21,44 @@ register.store:
     controller: App\Controller\SecurityController::store
 
 account:
+    methods: GET
     path: /account
-    controller: App\Controller\HomeController::account
+    controller: App\Controller\User\AccountController::index
+
+account.store:
+    methods: POST
+    path: /account
+    controller: App\Controller\User\AccountController::store
+
+account.address:
+    methods: GET
+    path: /account/address
+    controller: App\Controller\User\AddressController::index
+
+account.address.create:
+    methods: GET
+    path: /account/address/new
+    controller: App\Controller\User\AddressController::create
+
+account.address.store:
+    methods: POST
+    path: /account/address/new
+    controller: App\Controller\User\AddressController::store
+
+account.address.edit:
+    methods: GET
+    path: /account/address/{address}
+    controller: App\Controller\User\AddressController::edit
+
+account.address.update:
+    methods: PATCH
+    path: /account/address/{address}
+    controller: App\Controller\User\AddressController::update
+
+account.address.destroy:
+    methods: DELETE
+    path: /account/address/{address}
+    controller: App\Controller\User\AddressController::destroy
 
 admin:
     path: /admin

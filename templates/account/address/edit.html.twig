@@ -1,0 +1,14 @@
+{% extends 'account/base.html.twig' %}
+
+{% block subtitle %}Account
+{% endblock %}
+
+{% block subbody %}
+    <div class="flex flex justify-between text-center">
+        <p>Yours Addresses</p>
+        <a class="btn-g uppercase" href="{{ path('account.address.create') }}">add</a>
+    </div>
+    <hr class="border-b-2 border-gray-200 mt-5">
+    {% include "account/address/form.html.twig" with {'form': addressForm, 'address': address} only %}
+
+{% endblock %}

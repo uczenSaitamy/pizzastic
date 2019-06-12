@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle %}Account
+{% endblock %}
+
+{% block body %}
+    <div class="flex flex-row">
+        <div class="w-1/5 mr-3 mx-3 p-3 bg-white border-r-2 text-center text-xl">
+            {% include "account/sidebar.html.twig" %}
+        </div>
+        <div class="w-4/5 mr-3 mx-3 p-3">
+            {% block subbody %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'account/base.html.twig' %}
+
+{% block subtitle %}Account
+{% endblock %}
+
+{% block subbody %}
+    <div class="flex justify-between text-center">
+        <p>Yours Addresses</p>
+        <a class="btn-g uppercase" href="{{ path('account.address.create') }}">add</a>
+    </div>
+    <hr class="border-b-2 border-gray-200 mt-5">
+    <ul class="list-none flex flex-wrap text-gray-600 p-5">
+        {% for address in addresses %}
+            <li class="w-1/2 justify-center text-center mb-3">
+                <p class="text-xl">{{ address.name }}</p>
+                <p class="text-base">{{ address }}</p>
+
+                <div class="flex justify-around">
+                    <a class="btn-o uppercase" href="{{ path('account.address.edit', {'address': address.id}) }}">edit</a>
+                    <form action="{{ path('account.address.destroy', {'address': address.id}) }}" method="POST">
+                        <input name="_method" type="hidden" value="DELETE"/>
+
+                        <button class="btn-r uppercase">delete</a>
+                    </form>
+                </div>
+            </li>
+        {% endfor %}
+    </li>
+</ul>{% endblock %}

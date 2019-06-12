@@ -14,9 +14,4 @@ class HomeController extends BaseController
             'controller_name' => 'HomeController',
         ]);
     }
-
-    public function account()
-    {
-        return $this->view('account');
-    }
 }
