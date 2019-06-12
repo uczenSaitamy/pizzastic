@@ -1,4 +1,4 @@
-{{ form_start(form, {'method': exist ? 'PATCH' : 'POST', 'action': exist ? path('account.address.update', {'address': id}) : path('account.address.store')}) }}
+{{ form_start(form, {'method': address.id ? 'PATCH' : 'POST', 'action': address.id ? path('account.address.update', {'address': address.id}) : path('account.address.store')}) }}
 <div class="row">
     {{ form_label(form.name) }}
     {{ form_widget(form.name, {'attr': {

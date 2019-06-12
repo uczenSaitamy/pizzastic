@@ -26,15 +26,22 @@ class AddressController extends BaseController
         // return $this->view('index', ['addressesForms' => $addressesForms, 'user' => $user, 'newAddressForm' => $newAddressForm]);
     }
 
+    public function create()
+    {
+        if ($user = $this->getUser()) {
+            $address = new Address();
+            $addressForm = $this->createForm(AddressType::class, $address)->createView();
+        }
+        return $this->view('edit', ['addressForm' => $addressForm, 'address' => $address]);
+    }
+
     public function store(Request $request, ValidatorInterface $valid)
     {
-        // dd();
         if ($user = $this->getUser()) {
             $form = $this->createForm(AddressType::class, $address = new Address());
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                // dd($valid->validate($address));
                 $em = $this->getDoctrine()->getManager();
                 $address->setUser($user);
                 $em->persist($address);
@@ -45,6 +52,14 @@ class AddressController extends BaseController
         }
         return $this->redirectToRoute('account.address');
         // return $this->view('index', ['form' => $form->createView(), 'user' => $user]);
+    }
+
+    public function edit(Address $address)
+    {
+        if ($user = $this->getUser()) {
+            $addressForm = $this->createForm(AddressType::class, $address)->createView();
+        }
+        return $this->view('edit', ['addressForm' => $addressForm, 'address' => $address]);
     }
 
     public function update(Request $request, Address $address)
@@ -60,6 +75,18 @@ class AddressController extends BaseController
 
                 $this->addFlash('success', 'Your data has been saved.');
             }
+        }
+        return $this->redirectToRoute('account.address');
+    }
+
+    public function destroy(Address $address)
+    {
+        if ($this->getUser()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($address);
+            $em->flush();
+
+            $this->addFlash('success', 'Your address has been removed successfully.');
         }
         return $this->redirectToRoute('account.address');
     }
