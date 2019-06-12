@@ -30,6 +30,21 @@ account.store:
     path: /account
     controller: App\Controller\User\AccountController::store
 
+account.address:
+    methods: GET
+    path: /account/address
+    controller: App\Controller\User\AddressController::index
+
+account.address.store:
+    methods: POST
+    path: /account/address
+    controller: App\Controller\User\AddressController::store
+
+account.address.update:
+    methods: PATCH
+    path: /account/address/{address}
+    controller: App\Controller\User\AddressController::update
+
 admin:
     path: /admin
     controller: App\Controller\Admin\AdminController::index

@@ -1,0 +1,53 @@
+{{ form_start(form, {'method': exist ? 'PATCH' : 'POST', 'action': exist ? path('account.address.update', {'address': id}) : path('account.address.store')}) }}
+<div class="row">
+    {{ form_label(form.name) }}
+    {{ form_widget(form.name, {'attr': {
+                'class': 'my-1 bg-gray-200 px-3 py-1 rounded',
+                'placeholder': 'Name'}}) }}
+    <small class="text-red">
+        {{ form_errors(form.name)}}
+    </small>
+</div>
+
+<div class="row">
+    {{ form_label(form.address) }}
+    {{ form_widget(form.address, {'attr': {
+                'class': 'my-1 bg-gray-200 px-3 py-1 rounded',
+                'placeholder': 'Address'}}) }}
+    <small class="text-red">
+        {{ form_errors(form.address)}}
+    </small>
+</div>
+<div class="row">
+    {{ form_label(form.zipcode) }}
+    {{ form_widget(form.zipcode, {'attr': {
+                'class': 'my-1 bg-gray-200 px-3 py-1 rounded',
+                'placeholder': 'Zipcode'}}) }}
+    <small class="text-red">
+        {{ form_errors(form.zipcode)}}
+    </small>
+</div>
+<div class="row">
+    {{ form_label(form.city) }}
+    {{ form_widget(form.city, {'attr': {
+                'class': 'my-1 bg-gray-200 px-3 py-1 rounded',
+                'placeholder': 'City'}}) }}
+    <small class="text-red">
+        {{ form_errors(form.city)}}
+    </small>
+</div>
+<div class="row">
+    {{ form_label(form.country) }}
+    {{ form_widget(form.country, {'attr': {
+                'class': 'my-1 bg-gray-200 px-3 py-1 rounded',
+                'placeholder': 'Country'}}) }}
+    <small class="text-red">
+        {{ form_errors(form.country)}}
+    </small>
+</div>
+<div class="row">
+    <button class="btn-b mt-3" type="submit">
+        Save
+    </button>
+</div>
+{{ form_end(form) }}
