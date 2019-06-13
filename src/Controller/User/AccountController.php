@@ -5,6 +5,7 @@ namespace App\Controller\User;
 use App\Controller\BaseController;
 use App\Form\UserDataType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class AccountController extends BaseController
 {
@@ -12,26 +13,34 @@ class AccountController extends BaseController
 
     public function index()
     {
-        if ($user = $this->getUser()) {
-            $form = $this->createForm(UserDataType::class, $user);
-        }
+        $user = $this->getUser();
+        $form = $this->createForm(UserDataType::class, $user);
+
         return $this->view('index', ['form' => $form->createView(), 'user' => $user]);
     }
 
     public function store(Request $request)
     {
-        if ($user = $this->getUser()) {
-            $form = $this->createForm(UserDataType::class, $user);
-            $form->handleRequest($request);
+        $user = $this->getUser();
+        $form = $this->createForm(UserDataType::class, $user);
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($user);
-                $entityManager->flush();
-
-                $this->addFlash('success', 'Your data has been saved.');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->getConnection()->beginTransaction();
+            try {
+                $em->persist($user);
+                $em->flush();
+                $em->getConnection()->commit();
+            } catch (Exception $e) {
+                $em->getConnection()->rollBack();
+                // TODO LOG EXCEPTION $e
+                $this->addFlash('error', 'Your data has not been saved.');
             }
+
+            $this->addFlash('success', 'Your data has been saved.');
         }
+
         return $this->view('index', ['form' => $form->createView(), 'user' => $user]);
     }
 }
