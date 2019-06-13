@@ -56,14 +56,20 @@ class AddressController extends BaseController
 
     public function edit(Address $address)
     {
-        // TODO Check if another user can access not his address details
+        if (!$address->isUser($this->getUser())) {
+            return $this->redirectToRoute('account.address');
+        }
+
         $addressForm = $this->createForm(AddressType::class, $address)->createView();
         return $this->view('edit', ['addressForm' => $addressForm, 'address' => $address]);
     }
 
     public function update(Request $request, Address $address)
     {
-        // TODO Check if another user can access not his address details
+        if (!$address->isUser($this->getUser())) {
+            return $this->redirectToRoute('account.address');
+        }
+
         $form = $this->createForm(AddressType::class, $address, ['method' => 'PATCH']);
         $form->handleRequest($request);
 
@@ -89,7 +95,10 @@ class AddressController extends BaseController
 
     public function destroy(Address $address)
     {
-        // TODO Check if another user can access not his address details
+        if (!$address->isUser($this->getUser())) {
+            return $this->redirectToRoute('account.address');
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->getConnection()->beginTransaction();
 

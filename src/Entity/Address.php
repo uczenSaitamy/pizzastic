@@ -130,6 +130,11 @@ class Address
         return $this;
     }
 
+    public function isUser(User $user): bool
+    {
+        return $user == $this->getUser();
+    }
+
     public function __toString()
     {
         return $this->address . ', ' . $this->zipcode . ' ' . $this->city . ', ' . $this->country;
