@@ -6,7 +6,7 @@ use App\Controller\BaseController;
 use App\Form\AddressType;
 use App\Entity\Address;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class AddressController extends BaseController
 {
@@ -14,80 +14,106 @@ class AddressController extends BaseController
 
     public function index()
     {
-        if ($user = $this->getUser()) {
-            $addresses = $user->getAddresses();
+        $user = $this->getUser();
+        $addresses = $user->getAddresses();
 
-            // foreach ($addresses as $address) {
-            //     $addressesForms[$address->getId()] = $this->createForm(AddressType::class, $address, ['method' => 'PATCH'])->createView();
-            // }
-            // $newAddressForm = $this->createForm(AddressType::class, new Address())->createView();
-        }
         return $this->view('index', ['addresses' => $addresses]);
-        // return $this->view('index', ['addressesForms' => $addressesForms, 'user' => $user, 'newAddressForm' => $newAddressForm]);
     }
 
     public function create()
     {
-        if ($user = $this->getUser()) {
-            $address = new Address();
-            $addressForm = $this->createForm(AddressType::class, $address)->createView();
-        }
+        $address = new Address();
+        $addressForm = $this->createForm(AddressType::class, $address)->createView();
+
         return $this->view('edit', ['addressForm' => $addressForm, 'address' => $address]);
     }
 
-    public function store(Request $request, ValidatorInterface $valid)
+    public function store(Request $request)
     {
-        if ($user = $this->getUser()) {
-            $form = $this->createForm(AddressType::class, $address = new Address());
-            $form->handleRequest($request);
+        $form = $this->createForm(AddressType::class, $address = new Address());
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $address->setUser($user);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->getConnection()->beginTransaction();
+
+            try {
+                $address->setUser($this->getUser());
                 $em->persist($address);
                 $em->flush();
+                $em->getConnection()->commit();
 
-                $this->addFlash('success', 'Your data has been saved.');
+                $this->addFlash('success', 'Your address has been saved.');
+            } catch (Exception $e) {
+                $em->getConnection()->rollBack();
+                // TODO LOG EXCEPTION $e
+                $this->addFlash('error', 'Your address has not been saved.');
             }
         }
+
         return $this->redirectToRoute('account.address');
-        // return $this->view('index', ['form' => $form->createView(), 'user' => $user]);
     }
 
     public function edit(Address $address)
     {
-        if ($user = $this->getUser()) {
-            $addressForm = $this->createForm(AddressType::class, $address)->createView();
+        if (!$address->isUser($this->getUser())) {
+            return $this->redirectToRoute('account.address');
         }
+
+        $addressForm = $this->createForm(AddressType::class, $address)->createView();
         return $this->view('edit', ['addressForm' => $addressForm, 'address' => $address]);
     }
 
     public function update(Request $request, Address $address)
     {
-        if ($this->getUser()) {
-            $form = $this->createForm(AddressType::class, $address, ['method' => 'PATCH']);
-            $form->handleRequest($request);
+        if (!$address->isUser($this->getUser())) {
+            return $this->redirectToRoute('account.address');
+        }
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(AddressType::class, $address, ['method' => 'PATCH']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->getConnection()->beginTransaction();
+
+            try {
                 $em->persist($address);
                 $em->flush();
+                $em->getConnection()->commit();
 
-                $this->addFlash('success', 'Your data has been saved.');
+                $this->addFlash('success', 'Your address has been saved.');
+            } catch (Exception $e) {
+                $em->getConnection()->rollBack();
+                // TODO LOG EXCEPTION $e
+                $this->addFlash('error', 'Your address has not been saved.');
             }
         }
+
         return $this->redirectToRoute('account.address');
     }
 
     public function destroy(Address $address)
     {
-        if ($this->getUser()) {
-            $em = $this->getDoctrine()->getManager();
+        if (!$address->isUser($this->getUser())) {
+            return $this->redirectToRoute('account.address');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->getConnection()->beginTransaction();
+
+        try {
             $em->remove($address);
             $em->flush();
+            $em->getConnection()->commit();
 
             $this->addFlash('success', 'Your address has been removed successfully.');
+        } catch (Exception $e) {
+            $em->getConnection()->rollBack();
+            // TODO LOG EXCEPTION $e
+            $this->addFlash('errors', 'Your address has not been saved.');
         }
+
         return $this->redirectToRoute('account.address');
     }
 }
