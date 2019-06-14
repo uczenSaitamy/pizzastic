@@ -1,0 +1,9 @@
+{% extends "emails/base.html.twig" %}
+
+{% block body %}
+    <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">{{ user.email }}</p>
+    <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
+        Your Account has been succesfully created. To complete registration please click
+        <a href="{{ url('register.confirm', {'token': user.confirmToken }) }}">here</a>
+    </p>
+{% endblock %}

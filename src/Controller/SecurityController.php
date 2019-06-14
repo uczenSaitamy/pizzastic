@@ -37,7 +37,7 @@ class SecurityController extends BaseController
         return $this->view('register', ['form' => $form->createView()]);
     }
 
-    public function store(Request $request, UserPasswordEncoderInterface $encoder)
+    public function store(Request $request, UserPasswordEncoderInterface $encoder, \Swift_Mailer $mailer)
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -52,11 +52,36 @@ class SecurityController extends BaseController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+            $this->sendConfirmationLink($mailer, $user);
 
             // TODO SEND EMAIL
             $this->addFlash('success', 'Please confirm your account via email link!');
-            return $this->view('login');
+            return $this->redirectToRoute('login');
         }
         return $this->view('register', ['form' => $form->createView()]);
+    }
+
+    public function confirm($token)
+    {
+        if (!$user = $this->getDoctrine()->getRepository(User::class)->findOneByToken($token)) {
+            $this->addFlash('errors', 'Unable to confirm account. Bad token provided.');
+            return $this->redirectToRoute('login');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->getConnection()->beginTransaction();
+        try {
+            $user->setConfirmToken(false);
+
+            $em->persist($user);
+            $em->flush();
+            $em->getConnection()->commit();
+        } catch (Exception $e) {
+            $em->getConnection()->rollBack();
+            // TODO LOG EXCEPTION $e
+            $this->addFlash('errors', 'Unable to confirm account. Bad token provided.');
+        }
+        $this->addFlash('success', 'Your account has been successfully confirmed.');
+        return $this->redirectToRoute('login');
     }
 }

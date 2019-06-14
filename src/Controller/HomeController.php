@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use Symfony\Component\Routing\Annotation\Route;
-
 class HomeController extends BaseController
 {
     protected $prefix = 'home';
