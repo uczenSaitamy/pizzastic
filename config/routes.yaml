@@ -20,6 +20,11 @@ register.store:
     path: /register
     controller: App\Controller\SecurityController::store
 
+register.confirm:
+    methods: GET
+    path: /register/{token}
+    controller: App\Controller\SecurityController::confirm
+
 account:
     methods: GET
     path: /account

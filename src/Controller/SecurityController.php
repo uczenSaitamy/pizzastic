@@ -59,4 +59,15 @@ class SecurityController extends BaseController
         }
         return $this->view('register', ['form' => $form->createView()]);
     }
+
+    public function confirm($token)
+    {
+        if (!$user = $this->getDoctrine()->getRepository(User::class)->findOneByToken($token)) {
+            $this->addFlash('errors', 'Unable to confirm account. Bad token provided.');
+            return $this->view('login');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        dd($token, $user);
+    }
 }
