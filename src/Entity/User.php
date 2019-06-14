@@ -160,9 +160,9 @@ class User implements UserInterface
         return $this->confirm_token;
     }
 
-    public function setConfirmToken(): self
+    public function setConfirmToken($setting = true): self
     {
-        $this->confirm_token = md5(uniqid($this->email, true));
+        $this->confirm_token = $setting ? md5(uniqid($this->email, true)) : null;
 
         return $this;
     }
